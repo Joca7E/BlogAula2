@@ -20,7 +20,8 @@
 
             <!-- Botões alinhados à direita da tela -->
             <div class="position-absolute" style="right: 0;">
-                <a class="btn btn-info mr-3" href="#" data-tooltip="tooltip" title="Não tem uma conta? Cadastre-se">Cadastre-se</a>
+                <a class="btn btn-info mr-3" 
+                href="<?=URL?>/usuarios/cadastrar" data-tooltip="tooltip" title="Não tem uma conta? Cadastre-se">Cadastre-se</a>
                 <a class="btn btn-info" href="#" data-tooltip="tooltip" title="Tem uma conta? Faça login">Entrar</a>
             </div>
         </nav>
