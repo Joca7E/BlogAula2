@@ -8,7 +8,7 @@
 
             <form name="cadastrar" method="POST" action="<?= URL ?>/usuarios/cadastrar" class="mt-4">
             <div class="form-group">
-                    <label for="nome">E-mail: <sup class="text-danger">*</sup></label>
+                    <label for="nome">Nome: <sup class="text-danger">*</sup></label>
                     <input type='text' name='nome' id='nome'  class='form-control <?= $dados['nome_erro'] ? 'is-invalid' : '' ?>'>
                     <div class='invalid-feedback'>
                         <?= $dados['nome_erro'] ?>
