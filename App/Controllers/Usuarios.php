@@ -2,9 +2,10 @@
 
 class Usuarios extends Controller
 {
+    private $usuarioModel;
     public function __construct()
     {
-        $this->$usuarioModel = $this->model('Usuario');
+        $this->usuarioModel = $this->model('Usuario');
     }
 
     public function cadastrar()
@@ -48,7 +49,7 @@ class Usuarios extends Controller
                     $dados['confirma_senha_erro'] = 'As senhas são diferentes';
                 else:
                     $dados['senha'] = password_hash($formulario['senha'], PASSWORD_DEFAULT);
-                    
+
                     if($this->usuarioModel->armazenar($dados)):
                     echo 'Cadastro realizado com sucesso<hr>';
                     else:
