@@ -33,15 +33,18 @@ class Usuarios extends Controller
                     $dados['confirma_senha_erro'] = 'Confirme a Senha';
                 endif;
             else :
-                
-                if (strlen($formulario['senha']) < 6) :
+                if(Checa::checarNome($formulario['nome'])):
+                    $dados['nome_erro'] = 'O nome informado é inválido.';
+                    elseif(Checa::checarEmail($formulario['email'])):
+                        $dados['email_erro'] = 'O e-mail informado é inválido.';
+                        
+                    elseif (strlen($formulario['senha']) < 6) :
                     $dados['senha_erro'] = 'A senha deve ter no minimo 6 caracteres';
-                elseif ($formulario['senha'] != $formulario['confirma_senha']) :
+                    elseif ($formulario['senha'] != $formulario['confirma_senha']) :
                     $dados['confirma_senha_erro'] = 'As senhas são diferentes';
                 else:
                     echo 'Pode cadastrar os dados<hr>';
                 endif;
-
             endif;
 
             var_dump($formulario);
