@@ -3,6 +3,7 @@
 class Usuarios extends Controller
 {
     private $usuarioModel;
+    
     public function __construct()
     {
         $this->usuarioModel = $this->model('Usuario');
@@ -71,11 +72,65 @@ class Usuarios extends Controller
                 'email' => '',
                 'senha' => '',
                 'confirma_senha' => '',
+                'nome_erro' => '',
+                'email_erro' => '',
+                'senha_erro' => '',
+                'confirma_senha_erro' => '',
             ];
 
         endif;
 
 
         $this->view('usuarios/cadastrar', $dados);
+    }//fim da função cadastrar
+    
+    public function logar()
+    {
+
+        $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        if (isset($formulario)) :
+            $dados = [
+                'email' => trim($formulario['email']),
+                'senha' => trim($formulario['senha']),  
+            ];
+
+            if (in_array("", $formulario)) :
+                if (empty($formulario['email'])) :
+                    $dados['email_erro'] = 'Preencha o campo e-mail';
+                endif;
+
+                if (empty($formulario['senha'])) :
+                    $dados['senha_erro'] = 'Preencha o campo senha';
+                endif;
+            else :
+                    if(Checa::checarEmail($formulario['email'])):
+                        $dados['email_erro'] = 'O e-mail informado é inválido.';
+                else:
+                    $usuario = $this->usuarioModel->checarLogin($formulario['email'], $formulario['senha']);
+                    if($usuario):
+                     $this->criarSessaoUsuario($usuario);
+                    else:
+                        die("Usuario ou senha inválido");
+                    endif;
+                endif;
+            endif;
+            var_dump($formulario);
+        else :
+            $dados = [
+                'email' => '',
+                'senha' => '',
+                'email_erro' => '',
+                'senha_erro' => '',
+            ];
+
+        endif;
+
+
+        $this->view('usuarios/logar', $dados);
     }
+    private function criarSessaoUsuario($usuario){
+        $_SESSION['usuario_id'] = $usuario->id;
+        $_SESSION['usuario_nome'] = $usuario->nome;
+        $_SESSION['usuario_email'] = $usuario->email;
+    }// fim da função criarSessaoUsuario
 }
